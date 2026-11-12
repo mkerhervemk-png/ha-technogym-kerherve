@@ -1,0 +1,186 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Compte Technogym / Mywellness",
+        "description": "Identifiants de l'application Technogym (les mêmes que sur mywellness.com).",
+        "data": {
+          "email": "Email",
+          "password": "Mot de passe"
+        }
+      },
+      "facility": {
+        "title": "Choix du club",
+        "description": "Ton compte est rattaché à plusieurs clubs. Lequel suivre ?",
+        "data": {
+          "facility_id": "Club"
+        }
+      },
+      "reauth_confirm": {
+        "title": "Reconnexion Technogym",
+        "description": "Le mot de passe de {email} a été refusé. Saisis-le à nouveau.",
+        "data": {
+          "password": "Mot de passe"
+        }
+      }
+    },
+    "error": {
+      "invalid_auth": "Email ou mot de passe incorrect.",
+      "cannot_connect": "Impossible de joindre Mywellness.",
+      "unknown": "Erreur inattendue, voir le journal."
+    },
+    "abort": {
+      "already_configured": "Ce compte est déjà configuré.",
+      "no_facility": "Aucun club Technogym n'est rattaché à ce compte.",
+      "reauth_successful": "Reconnexion réussie.",
+      "wrong_account": "Ce n'est pas le même compte Mywellness."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Options Technogym",
+        "data": {
+          "scan_interval": "Fréquence de mise à jour",
+          "history_days": "Historique chargé",
+          "class_days": "Planning des cours chargé"
+        },
+        "data_description": {
+          "scan_interval": "En minutes (15 à 240). Inutile de descendre trop bas : l'API n'est pas officielle.",
+          "history_days": "Nombre de jours d'activités récupérés.",
+          "class_days": "Nombre de jours de cours du club récupérés (0 = désactivé)."
+        }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "movergy": {
+        "name": "Indice Movergy"
+      },
+      "moves_today": {
+        "name": "MOVEs aujourd'hui"
+      },
+      "moves_week": {
+        "name": "MOVEs cette semaine"
+      },
+      "moves_month": {
+        "name": "MOVEs ce mois"
+      },
+      "calories_today": {
+        "name": "Calories aujourd'hui"
+      },
+      "calories_week": {
+        "name": "Calories cette semaine"
+      },
+      "duration_week": {
+        "name": "Temps d'entraînement semaine"
+      },
+      "workouts_week": {
+        "name": "Séances cette semaine"
+      },
+      "workouts_month": {
+        "name": "Séances ce mois"
+      },
+      "last_workout": {
+        "name": "Dernière séance"
+      },
+      "last_workout_name": {
+        "name": "Nom dernière séance"
+      },
+      "days_since_last_workout": {
+        "name": "Jours depuis la dernière séance"
+      },
+      "next_class": {
+        "name": "Prochain cours réservé"
+      },
+      "booked_classes": {
+        "name": "Cours réservés"
+      }
+    },
+    "binary_sensor": {
+      "trained_today": {
+        "name": "Entraîné aujourd'hui"
+      },
+      "class_today": {
+        "name": "Cours aujourd'hui"
+      }
+    },
+    "calendar": {
+      "calendar": {
+        "name": "Entraînements"
+      }
+    }
+  },
+  "exceptions": {
+    "no_loaded_entry": {
+      "message": "Aucun compte Technogym chargé."
+    }
+  },
+  "services": {
+    "list_classes": {
+      "name": "Lister les cours",
+      "description": "Renvoie le planning des cours du club (avec class_id et partition_date pour réserver).",
+      "fields": {
+        "config_entry_id": {
+          "name": "Compte",
+          "description": "Compte Technogym (facultatif s'il n'y en a qu'un)."
+        },
+        "days": {
+          "name": "Jours",
+          "description": "Nombre de jours à partir d'aujourd'hui."
+        },
+        "only_bookable": {
+          "name": "Réservables seulement",
+          "description": "Ne garder que les cours avec des places libres et non réservés."
+        }
+      }
+    },
+    "book_class": {
+      "name": "Réserver un cours",
+      "description": "Réserve un cours Technogym.",
+      "fields": {
+        "config_entry_id": {
+          "name": "Compte",
+          "description": "Compte Technogym (facultatif s'il n'y en a qu'un)."
+        },
+        "class_id": {
+          "name": "ID du cours",
+          "description": "class_id renvoyé par Lister les cours."
+        },
+        "partition_date": {
+          "name": "Date du cours",
+          "description": "Date au format AAAAMMJJ (partition_date)."
+        }
+      }
+    },
+    "unbook_class": {
+      "name": "Annuler un cours",
+      "description": "Annule une réservation de cours.",
+      "fields": {
+        "config_entry_id": {
+          "name": "Compte",
+          "description": "Compte Technogym (facultatif s'il n'y en a qu'un)."
+        },
+        "class_id": {
+          "name": "ID du cours",
+          "description": "class_id du cours réservé."
+        },
+        "partition_date": {
+          "name": "Date du cours",
+          "description": "Date au format AAAAMMJJ (partition_date)."
+        }
+      }
+    },
+    "refresh": {
+      "name": "Rafraîchir",
+      "description": "Force une mise à jour immédiate depuis Mywellness.",
+      "fields": {
+        "config_entry_id": {
+          "name": "Compte",
+          "description": "Compte Technogym (facultatif s'il n'y en a qu'un)."
+        }
+      }
+    }
+  }
+}

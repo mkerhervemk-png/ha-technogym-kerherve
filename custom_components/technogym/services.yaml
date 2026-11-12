@@ -1,0 +1,62 @@
+list_classes:
+  fields:
+    config_entry_id:
+      selector:
+        config_entry:
+          integration: technogym
+    days:
+      default: 7
+      selector:
+        number:
+          min: 0
+          max: 21
+          unit_of_measurement: j
+    only_bookable:
+      default: false
+      selector:
+        boolean:
+
+book_class:
+  fields:
+    config_entry_id:
+      selector:
+        config_entry:
+          integration: technogym
+    class_id:
+      required: true
+      selector:
+        text:
+    partition_date:
+      required: true
+      example: 20261115
+      selector:
+        number:
+          min: 20200101
+          max: 20991231
+          mode: box
+
+unbook_class:
+  fields:
+    config_entry_id:
+      selector:
+        config_entry:
+          integration: technogym
+    class_id:
+      required: true
+      selector:
+        text:
+    partition_date:
+      required: true
+      example: 20261115
+      selector:
+        number:
+          min: 20200101
+          max: 20991231
+          mode: box
+
+refresh:
+  fields:
+    config_entry_id:
+      selector:
+        config_entry:
+          integration: technogym
