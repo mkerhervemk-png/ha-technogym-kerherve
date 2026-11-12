@@ -29,6 +29,9 @@ _LOGGER = logging.getLogger(__name__)
 
 # Types renvoyés par ActivityHistory qui correspondent à un vrai entraînement
 WORKOUT_TYPES = {"WorkoutSession", "HRWorkout", "ClassSession", "Class", "CardioSession"}
+# Activité quotidienne synchronisée (pas, mouvement du téléphone/montre) : compte
+# dans les MOVEs mais n'est pas une séance
+NON_WORKOUT_TYPES = {"Movement", "Steps", "DailyActivity"}
 
 
 @dataclass(slots=True)
@@ -53,7 +56,11 @@ class Activity:
 
     @property
     def is_workout(self) -> bool:
-        return self.type in WORKOUT_TYPES or (self.duration_min or 0) > 0
+        if self.type in WORKOUT_TYPES:
+            return True
+        if self.type in NON_WORKOUT_TYPES:
+            return False
+        return (self.duration_min or 0) > 0
 
     def as_dict(self) -> dict[str, Any]:
         return {

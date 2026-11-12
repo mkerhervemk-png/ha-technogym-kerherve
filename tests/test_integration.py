@@ -36,6 +36,8 @@ def _history():
     return {"data": {"items": [
         {"idCr": 111, "partitionDate": p, "hour": 7, "minute": 30, "name": "Full body", "type": "WorkoutSession",
          "totalDurationInMinutes": 45, "moves": 620, "calories": 410, "workoutEffectiveness": 82},
+        {"idCr": 109, "partitionDate": p, "hour": 0, "minute": 8, "name": "iphone", "type": "Movement",
+         "duration": 10, "moves": 100, "calories": 40},
         {"idCr": 110, "partitionDate": y, "hour": 18, "minute": 0, "name": "Tapis", "type": "WorkoutSession",
          "duration": 30, "moves": 300, "calories": 250},
     ]}}
@@ -97,11 +99,12 @@ async def test_entities(hass: HomeAssistant, aioclient_mock: AiohttpClientMocker
     states = {s.entity_id: s for s in hass.states.async_all() if "technogym" in s.entity_id}
     for eid, s in sorted(states.items()):
         print(eid, "=", s.state)
-    assert hass.states.get("sensor.technogym_mael_moves_today").state == "620"
+    assert hass.states.get("sensor.technogym_mael_moves_today").state == "720"
     assert hass.states.get("sensor.technogym_mael_movergy_index").state == "74.0"
     assert hass.states.get("binary_sensor.technogym_mael_trained_today").state == "on"
     assert hass.states.get("sensor.technogym_mael_last_workout_name").state == "Full body"
     assert hass.states.get("sensor.technogym_mael_days_since_last_workout").state == "0"
+    assert hass.states.get("sensor.technogym_mael_workouts_this_week").state == "2"
     nxt = hass.states.get("sensor.technogym_mael_next_booked_class")
     assert nxt.state not in ("unknown", "unavailable")
     assert nxt.attributes["nom"] == "Group Cycle"
@@ -135,7 +138,7 @@ async def test_new_activity_event(hass: HomeAssistant, aioclient_mock: AiohttpCl
     await entry.runtime_data.async_refresh()
     await hass.async_block_till_done()
     assert len(events) == 1 and events[0].data["nom"] == "Vélo"
-    assert hass.states.get("sensor.technogym_mael_moves_today").state == "820"
+    assert hass.states.get("sensor.technogym_mael_moves_today").state == "920"
 
 
 async def test_token_expired_relogin(hass: HomeAssistant, aioclient_mock: AiohttpClientMocker):

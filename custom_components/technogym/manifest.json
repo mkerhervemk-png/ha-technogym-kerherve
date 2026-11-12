@@ -9,5 +9,5 @@
   "issue_tracker": "https://github.com/mkerhervemk-png/ha-technogym-kerherve/issues",
   "loggers": ["custom_components.technogym"],
   "requirements": [],
-  "version": "1.0.0"
+  "version": "1.0.1"
 }
